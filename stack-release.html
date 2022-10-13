@@ -19,18 +19,13 @@
 	var prod;
 	var staging;
 
-	var jira = "https://sagebionetworks.jira.com/issues/?filter=-1&";
-	var jira2 = "%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
-	var staging_closed_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=status%20%3D%20Closed%20AND%20fixVersion%20%3D%20stack-#staging#%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
-	var next_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=fixVersion%20%3D%20stack-#next#%20ORDER%20BY%20cf%5B11140%5D%20ASC%2C%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
-
-	function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText) {
+	function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText, failureColor="red") {
 		$.getJSON("https://api.github.com/repos/Sage-Bionetworks/" + repository + "/compare/" + baseBranch + "...Sage-Bionetworks:" + mergeBranch).done(function(data){
 			if (data.files.length==0) {
 				document.getElementById(elementId).style="color:green;";
 				document.getElementById(elementId).innerHTML=successText;
 			} else {
-				document.getElementById(elementId).style="color:red;";
+				document.getElementById(elementId).style="color:" + failureColor;
 				document.getElementById(elementId).innerHTML=failureText;
 			}
 		});
@@ -86,7 +81,8 @@
 						"main",
 						"develop",
 						"synapse-react-client main contains all changes in develop.",
-						"synapse-react-client main does not contain all changes in develop."
+						"synapse-react-client develop is ahead of main.",
+						"green"
 					)
 
 					$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/SynapseWebClient/develop/package.json").done(function(synapseWebPackageJson){
@@ -97,8 +93,8 @@
 								document.getElementById("src_version_in_swc").style="color:green;";
 								document.getElementById("src_version_in_swc").innerHTML="SWC develop is using the latest version of synapse-react-client.";
 							} else {
-								document.getElementById("src_version_in_swc").style="color:red;";
-								document.getElementById("src_version_in_swc").innerHTML="SWC develop is not using the latest version of synapse-react-client (using: " + synapseReactClientVersionInSwc + ", latest: " + synapseReactClientLatestVersion + ").";
+								document.getElementById("src_version_in_swc").style="color:green;";
+								document.getElementById("src_version_in_swc").innerHTML="SWC develop is using an old version of synapse-react-client (using: " + synapseReactClientVersionInSwc + ", latest: " + synapseReactClientLatestVersion + ").";
 							}
 						})
 					});
@@ -142,7 +138,6 @@
  				document.getElementById("rclient").innerHTML="R Client (version: "+rclient_version+")";
             }	
  		});
-			
 	});
 
 </script>
@@ -156,13 +151,13 @@
 		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20WW%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20fixVersion%20in%20(EMPTY%2C%20#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">this list of issues</a> to assigned validators.</li>
 
 		<li> Check that the staging stack is running and that data has migrated to the staging stack.</li>
-		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
-		<li> Check <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC%2C%20WW)%20AND%20status%20in%20(%22Blocked%2FMonitoring%22%2C%20%22In%20Progress%22%2C%20Open%2C%20Reopened%2C%20%22Waiting%20for%20Review%22)%20AND%20priority%20%3D%20Blocker%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">blockers.</a></li>
+		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
+		<li> Check <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC%2C%20WW)%20AND%20status%20in%20(%22Blocked%2FMonitoring%22%2C%20%22In%20Progress%22%2C%20Open%2C%20Reopened%2C%20%22Waiting%20for%20Review%22)%20AND%20priority%20%3D%20Blocker%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">blockers.</a></li>
 		<li> Make the Go-Live Decision for the new stack.</li>
 		<li> Release the previous stack in Jira.</li>
 		<li> Archive release notes, as required by Quality program, <a href="https://www.synapse.org/#!Synapse:syn25946179">here</a>.</li>
-		<li> Identify <a id="staging_closed_jira" href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Fixed%2C%20Done)%20AND%20fixVersion%20%3D%20stack-#staging#">significant features</a> that may merit an announcement to users.</li>
-		<li> Check that there are no unresolved issues on the <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20in%20(%22In%20Progress%22%2C%20Open%2C%20%22Blocked/Monitoring%22%2C%20%22Waiting for Review%22)%20AND%20fixVersion%20in%20(#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">staging stack</a>.</li>
+		<li> Identify <a id="staging_closed_jira" href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Fixed%2C%20Done)%20AND%20fixVersion%20%3D%20stack-#staging#">significant features</a> that may merit an announcement to users.</li>
+		<li> Check that there are no unresolved issues on the <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20in%20(%22In%20Progress%22%2C%20Open%2C%20%22Blocked/Monitoring%22%2C%20%22Waiting for Review%22)%20AND%20fixVersion%20in%20(#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">staging stack</a>.</li>
 		<li> Check that changes to released code have been merged into "develop" branch:
 		<ul>
 		<li> <a href="https://github.com/Sage-Bionetworks/Synapse-Repository-Services/compare/release-#staging#...Sage-Bionetworks:release-#prod#?expand=1" id=plfm_staging_vs_prod style="color:goldenrod;">Checking if PLFM prod merged into staging...</a></li>
@@ -184,7 +179,7 @@
 			<li>For any metrics we track week-to-week (including RO duration), enter in <a href="https://docs.google.com/a/sagebase.org/spreadsheets/d/1u1fYXFkW4pzQ4f1OhQvyON9PEtgcP6UZLierGeuknbw/edit?usp=sharing">this sheet.</a></li>
 
 			<li><a href="dependency-alerts/backend.html">Dependency Alert Checklist</a></li>
-			<!-- >li><a href="dependency-alerts/frontend.html">Dependency Alert Checklist (Frontend)</a></li-->
+			<!-- These are covered in a separate meeting with the full web engineering team <li><a href="dependency-alerts/frontend.html">Dependency Alert Checklist (Frontend)</a></li -->
 			
 			<li>Security Hub findings: 
 			Before the meeting run <a href="https://github.com/Sage-Bionetworks/security-hub-to-jira">this script</a> to create/update Jira issues for findings. 

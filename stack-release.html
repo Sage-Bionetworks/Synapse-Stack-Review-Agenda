@@ -92,7 +92,7 @@
 						"develop",
 						"synapse-react-client main contains all changes in develop.",
 						"synapse-react-client develop is ahead of main.",
-						"green"
+						"black"
 					)
 
 					$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/SynapseWebClient/develop/package.json").done(function (synapseWebPackageJson) {
@@ -103,7 +103,7 @@
 								document.getElementById("src_version_in_swc").style = "color:green;";
 								document.getElementById("src_version_in_swc").innerHTML = "SWC develop is using the latest version of synapse-react-client.";
 							} else {
-								document.getElementById("src_version_in_swc").style = "color:green;";
+								document.getElementById("src_version_in_swc").style = "color:black;";
 								document.getElementById("src_version_in_swc").innerHTML = "SWC develop is using an old version of synapse-react-client (using: " + synapseReactClientVersionInSwc + ", latest: " + synapseReactClientLatestVersion + ").";
 							}
 						})

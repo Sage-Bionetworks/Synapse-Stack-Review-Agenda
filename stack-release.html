@@ -123,31 +123,31 @@
 
 				});
 			});
-			$.getJSON("https://test.pypi.org/pypi/synapseclient/json").done(function (data) {
-				pyclient_staging_version = data.info.version;
-				document.getElementById("pyclient_staging_version").innerHTML = "Python client outstanding validation (v. " + pyclient_staging_version + ")";
-				version_elements = pyclient_staging_version.split(".");
-				if (version_elements.length > 1) {
-					two_part_version = version_elements[0] + "." + version_elements[1];
-					document.getElementById("pyclient_staging_version").innerHTML = "Python client outstanding validation (v. " + two_part_version + ")";
-					$("a").each(function (a) {
-						var href = $(this).attr("href");
-						href = href.replace("#py_staging_version#", two_part_version);
-						$(this).attr("href", href);
-					});
-				}
-			});
+			// $.getJSON("https://test.pypi.org/pypi/synapseclient/json").done(function (data) {
+			// 	pyclient_staging_version = data.info.version;
+			// 	document.getElementById("pyclient_staging_version").innerHTML = "Python client outstanding validation (v. " + pyclient_staging_version + ")";
+			// 	version_elements = pyclient_staging_version.split(".");
+			// 	if (version_elements.length > 1) {
+			// 		two_part_version = version_elements[0] + "." + version_elements[1];
+			// 		document.getElementById("pyclient_staging_version").innerHTML = "Python client outstanding validation (v. " + two_part_version + ")";
+			// 		$("a").each(function (a) {
+			// 			var href = $(this).attr("href");
+			// 			href = href.replace("#py_staging_version#", two_part_version);
+			// 			$(this).attr("href", href);
+			// 		});
+			// 	}
+			// });
 
-			$.get("https://r-docs.synapse.org").done(function (data) {
-				const parser = new DOMParser();
-				// convert html string into DOM
-				var rdocs = parser.parseFromString(data, "text/html");
-				var nodes = $(rdocs).find("[title|='Released version']");
-				for (var i = 0; i < nodes.length; i++) {
-					rclient_version = nodes[i].innerHTML;
-					document.getElementById("rclient").innerHTML = "R Client (version: " + rclient_version + ")";
-				}
-			});
+			// $.get("https://r-docs.synapse.org").done(function (data) {
+			// 	const parser = new DOMParser();
+			// 	// convert html string into DOM
+			// 	var rdocs = parser.parseFromString(data, "text/html");
+			// 	var nodes = $(rdocs).find("[title|='Released version']");
+			// 	for (var i = 0; i < nodes.length; i++) {
+			// 		rclient_version = nodes[i].innerHTML;
+			// 		document.getElementById("rclient").innerHTML = "R Client (version: " + rclient_version + ")";
+			// 	}
+			// });
 		});
 
 	</script>

@@ -1,48 +1,53 @@
 <html>
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Weekly Stack Review</title>
-	<link rel="icon" type="image/png"  href="https://www.synapse.org/favicon.png?v=3" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<style>
-    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
-    
-	body {
-		font-size: 22px;
-		line-height: 35px;
-		margin: 20px;
-	}
-</style>
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript">
+	<link rel="icon" type="image/png" href="https://www.synapse.org/favicon.png?v=3" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<style>
+		html,
+		body,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: "Roboto", sans-serif
+		}
 
-	var prod;
-	var staging;
+		body {
+			font-size: 22px;
+			line-height: 35px;
+			margin: 20px;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript">
 
-	var jira = "https://sagebionetworks.jira.com/issues/?filter=-1&";
-	var jira2 = "%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
-	var staging_closed_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=status%20%3D%20Closed%20AND%20fixVersion%20%3D%20stack-#staging#%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
-	var next_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=fixVersion%20%3D%20stack-#next#%20ORDER%20BY%20cf%5B11140%5D%20ASC%2C%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
+		var prod;
+		var staging;
 
-	function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText) {
-		$.getJSON("https://api.github.com/repos/Sage-Bionetworks/" + repository + "/compare/" + baseBranch + "...Sage-Bionetworks:" + mergeBranch).done(function(data){
-			if (data.files.length==0) {
-				document.getElementById(elementId).style="color:green;";
-				document.getElementById(elementId).innerHTML=successText;
-			} else {
-				document.getElementById(elementId).style="color:red;";
-				document.getElementById(elementId).innerHTML=failureText;
-			}
-		});
-	}
-	
-	$(document).ready(function() {
-		$.getJSON("https://repo-prod.prod.sagebase.org/repo/v1/version").done(function(data) {
-                prod = parseInt(data.version.replace(/(\d+)(\..*)?/, "$1"));
-                $("#prod").text(prod);
-                $.getJSON("https://repo-staging.prod.sagebase.org/repo/v1/version").done(function(data) {
-                    staging = parseInt(data.version.replace(/(\d+)(\..*)?/, "$1"));
-                    $("#staging").text(staging);
+		function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText, failureColor = "red") {
+			$.getJSON("https://api.github.com/repos/Sage-Bionetworks/" + repository + "/compare/" + baseBranch + "...Sage-Bionetworks:" + mergeBranch).done(function (data) {
+				if (data.files.length == 0) {
+					document.getElementById(elementId).style = "color:green;";
+					document.getElementById(elementId).innerHTML = successText;
+				} else {
+					document.getElementById(elementId).style = "color:" + failureColor;
+					document.getElementById(elementId).innerHTML = failureText;
+				}
+			});
+		}
+
+		$(document).ready(function () {
+			$.getJSON("https://repo-prod.prod.sagebase.org/repo/v1/version").done(function (data) {
+				prod = parseInt(data.version.replace(/(\d+)(\..*)?/, "$1"));
+				$("#prod").text(prod);
+				$.getJSON("https://repo-staging.prod.sagebase.org/repo/v1/version").done(function (data) {
+					staging = parseInt(data.version.replace(/(\d+)(\..*)?/, "$1"));
+					$("#staging").text(staging);
 
 					compareDiffAndUpdateElement(
 						"plfm_staging_vs_prod",
@@ -86,112 +91,118 @@
 						"main",
 						"develop",
 						"synapse-react-client main contains all changes in develop.",
-						"synapse-react-client main does not contain all changes in develop."
+						"synapse-react-client develop is ahead of main.",
+						"black"
 					)
 
-					$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/SynapseWebClient/develop/package.json").done(function(synapseWebPackageJson){
+					$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/SynapseWebClient/develop/package.json").done(function (synapseWebPackageJson) {
 						const synapseReactClientVersionInSwc = synapseWebPackageJson.dependencies['synapse-react-client']
-						$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/Synapse-React-Client/main/package.json").done(function(synapseReactClientPackageJson){
+						$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/Synapse-React-Client/main/package.json").done(function (synapseReactClientPackageJson) {
 							const synapseReactClientLatestVersion = synapseReactClientPackageJson.version
 							if (synapseReactClientVersionInSwc === synapseReactClientLatestVersion) {
-								document.getElementById("src_version_in_swc").style="color:green;";
-								document.getElementById("src_version_in_swc").innerHTML="SWC develop is using the latest version of synapse-react-client.";
+								document.getElementById("src_version_in_swc").style = "color:green;";
+								document.getElementById("src_version_in_swc").innerHTML = "SWC develop is using the latest version of synapse-react-client.";
 							} else {
-								document.getElementById("src_version_in_swc").style="color:red;";
-								document.getElementById("src_version_in_swc").innerHTML="SWC develop is not using the latest version of synapse-react-client (using: " + synapseReactClientVersionInSwc + ", latest: " + synapseReactClientLatestVersion + ").";
+								document.getElementById("src_version_in_swc").style = "color:black;";
+								document.getElementById("src_version_in_swc").innerHTML = "SWC develop is using an old version of synapse-react-client (using: " + synapseReactClientVersionInSwc + ", latest: " + synapseReactClientLatestVersion + ").";
 							}
 						})
 					});
 
-                    $("a").each(function(a) {
-                        var href = $(this).attr("href");
-                        href = href.replace("#staging#",staging);
-                        var staging_and_older = "stack-" + staging + ",stack-" + (staging - 1) + ",stack-" + (staging - 2) + ",stack-" + (staging - 3) + ",stack-" + (staging - 4); 
-                        href = href.replace("#staging_and_older#",staging_and_older);
-                        href = href.replace("#next#",staging + 1);
-                        href = href.replace("#prod#",prod);
-                        $(this).attr("href",href);
+					$("a").each(function (a) {
+						var href = $(this).attr("href");
+						href = href.replace("#staging#", staging);
+						var staging_and_older = "stack-" + staging + ",stack-" + (staging - 1) + ",stack-" + (staging - 2) + ",stack-" + (staging - 3) + ",stack-" + (staging - 4);
+						href = href.replace("#staging_and_older#", staging_and_older);
+						href = href.replace("#next#", staging + 1);
+						href = href.replace("#prod#", prod);
+						$(this).attr("href", href);
 
-                        $(this).attr("target","_blank");
-                    });
+						$(this).attr("target", "_blank");
+					});
 
-                });
-		});
-		$.getJSON("https://test.pypi.org/pypi/synapseclient/json").done(function(data) {
-                pyclient_staging_version = data.info.version;
-                document.getElementById("pyclient_staging_version").innerHTML="Python client outstanding validation (v. "+pyclient_staging_version+")";
-                version_elements = pyclient_staging_version.split(".");
-                if (version_elements.length>1) {
-                	two_part_version = version_elements[0]+"."+version_elements[1];
-                	document.getElementById("pyclient_staging_version").innerHTML="Python client outstanding validation (v. "+two_part_version+")";
-                 	$("a").each(function(a) {
-                        var href = $(this).attr("href");
-                        href = href.replace("#py_staging_version#", two_part_version);
-                        $(this).attr("href",href);
-                	});
-                }
+				});
+			});
 		});
 
-		$.get("https://r-docs.synapse.org").done(function(data) {
- 			const parser = new DOMParser();
-			// convert html string into DOM
-			var rdocs = parser.parseFromString(data, "text/html");		
-            var nodes = $(rdocs).find("[title|='Released version']");
-            for (var i = 0; i < nodes.length; i++) {
- 				rclient_version = nodes[i].innerHTML;
- 				document.getElementById("rclient").innerHTML="R Client (version: "+rclient_version+")";
-            }	
- 		});
-			
-	});
-
-</script>
+	</script>
 </head>
+
 <body>
 	<h1>Weekly Stack Review Meeting Agenda</h1>
 	<hr />
 	Prod version <span id="prod"></span><br />
 	Staging version <span id="staging"></span>
 	<ul>
-		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20WW%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20fixVersion%20in%20(EMPTY%2C%20#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">this list of issues</a> to assigned validators.</li>
+		<li>Before meeting, send <a
+				href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20WW%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20fixVersion%20in%20(EMPTY%2C%20#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">this
+				list of issues</a> to assigned validators.</li>
 
 		<li> Check that the staging stack is running and that data has migrated to the staging stack.</li>
-		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
-		<li> Check <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC%2C%20WW)%20AND%20status%20in%20(%22Blocked%2FMonitoring%22%2C%20%22In%20Progress%22%2C%20Open%2C%20Reopened%2C%20%22Waiting%20for%20Review%22)%20AND%20priority%20%3D%20Blocker%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">blockers.</a></li>
+		<li> Check that resolved issues on <a
+				href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging
+				stack</a> are validated (closed).</li>
+		<li> Check <a
+				href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC%2C%20WW)%20AND%20status%20in%20(%22Blocked%2FMonitoring%22%2C%20%22In%20Progress%22%2C%20Open%2C%20Reopened%2C%20%22Waiting%20for%20Review%22)%20AND%20priority%20%3D%20Blocker%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">blockers.</a>
+		</li>
 		<li> Make the Go-Live Decision for the new stack.</li>
 		<li> Release the previous stack in Jira.</li>
-		<li> Archive release notes, as required by Quality program, <a href="https://www.synapse.org/#!Synapse:syn25946179">here</a>.</li>
-		<li> Identify <a id="staging_closed_jira" href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Fixed%2C%20Done)%20AND%20fixVersion%20%3D%20stack-#staging#">significant features</a> that may merit an announcement to users.</li>
-		<li> Check that there are no unresolved issues on the <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20in%20(%22In%20Progress%22%2C%20Open%2C%20%22Blocked/Monitoring%22%2C%20%22Waiting for Review%22)%20AND%20fixVersion%20in%20(#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">staging stack</a>.</li>
+		<li> Archive release notes, as required by Quality program, <a
+				href="https://www.synapse.org/#!Synapse:syn25946179">here</a>.</li>
+		<li> Identify <a id="staging_closed_jira"
+				href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Fixed%2C%20Done)%20AND%20fixVersion%20%3D%20stack-#staging#">significant
+				features</a> that may merit an announcement to users.</li>
+		<li> Check that there are no unresolved issues on the <a
+				href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20SWC)%20AND%20status%20in%20(%22In%20Progress%22%2C%20Open%2C%20%22Blocked/Monitoring%22%2C%20%22Waiting for Review%22)%20AND%20fixVersion%20in%20(#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">staging
+				stack</a>.</li>
 		<li> Check that changes to released code have been merged into "develop" branch:
-		<ul>
-		<li> <a href="https://github.com/Sage-Bionetworks/Synapse-Repository-Services/compare/release-#staging#...Sage-Bionetworks:release-#prod#?expand=1" id=plfm_staging_vs_prod style="color:goldenrod;">Checking if PLFM prod merged into staging...</a></li>
-		<li> <a href="https://github.com/Sage-Bionetworks/Synapse-Repository-Services/compare/develop...Sage-Bionetworks:release-#staging#?expand=1" id=plfm_dev_vs_staging style="color:goldenrod;">Checking if PLFM staging merged into develop...</a></li>
-		<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/compare/release-#staging#...Sage-Bionetworks:release-#prod#?expand=1" id=swc_staging_vs_prod style="color:goldenrod;">Checking if SWC prod merged into staging...</a></li>
-		<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/compare/develop...Sage-Bionetworks:release-#staging#?expand=1" id=swc_dev_vs_staging style="color:goldenrod;">Checking if SWC staging merged into develop...</a></li>
-		<li> <a href="https://github.com/Sage-Bionetworks/Synapse-React-Client/compare/main...Sage-Bionetworks:develop#?expand=1" id=src_dev_vs_main style="color:goldenrod;">Checking if synapse-react-client develop merged into main...</a></li>
-		<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/blob/develop/package.json" id=src_version_in_swc style="color:goldenrod;">Checking SWC develop for latest version of synapse-react-client...</a></li>
-		</ul> 
+			<ul>
+				<li> <a href="https://github.com/Sage-Bionetworks/Synapse-Repository-Services/compare/release-#staging#...Sage-Bionetworks:release-#prod#?expand=1"
+						id=plfm_staging_vs_prod style="color:goldenrod;">Checking if PLFM prod merged into
+						staging...</a></li>
+				<li> <a href="https://github.com/Sage-Bionetworks/Synapse-Repository-Services/compare/develop...Sage-Bionetworks:release-#staging#?expand=1"
+						id=plfm_dev_vs_staging style="color:goldenrod;">Checking if PLFM staging merged into
+						develop...</a></li>
+				<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/compare/release-#staging#...Sage-Bionetworks:release-#prod#?expand=1"
+						id=swc_staging_vs_prod style="color:goldenrod;">Checking if SWC prod merged into staging...</a>
+				</li>
+				<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/compare/develop...Sage-Bionetworks:release-#staging#?expand=1"
+						id=swc_dev_vs_staging style="color:goldenrod;">Checking if SWC staging merged into
+						develop...</a></li>
+				<li> <a href="https://github.com/Sage-Bionetworks/Synapse-React-Client/compare/main...Sage-Bionetworks:develop#?expand=1"
+						id=src_dev_vs_main style="color:goldenrod;">Checking if synapse-react-client develop merged into
+						main...</a></li>
+				<li> <a href="https://github.com/Sage-Bionetworks/SynapseWebClient/blob/develop/package.json"
+						id=src_version_in_swc style="color:goldenrod;">Checking SWC develop for latest version of
+						synapse-react-client...</a></li>
+			</ul>
 		</li>
 
 		<li> Review performance metrics:</li>
 		<ul>
 			<li><a href="https://redash.synapse.org/dashboard/stack-meeting">Synapse Data Warehouse</a></li>
 
-			<li><a href="https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Stack-status">EC-2/RDS Dashboard</a></li>
+			<li><a href="https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Stack-status">EC-2/RDS
+					Dashboard</a></li>
 
 
-			<li>For any metrics we track week-to-week (including RO duration), enter in <a href="https://docs.google.com/a/sagebase.org/spreadsheets/d/1u1fYXFkW4pzQ4f1OhQvyON9PEtgcP6UZLierGeuknbw/edit?usp=sharing">this sheet.</a></li>
+			<li>For any metrics we track week-to-week (including RO duration), enter in <a
+					href="https://docs.google.com/a/sagebase.org/spreadsheets/d/1u1fYXFkW4pzQ4f1OhQvyON9PEtgcP6UZLierGeuknbw/edit?usp=sharing">this
+					sheet.</a></li>
 
 			<li><a href="dependency-alerts/backend.html">Dependency Alert Checklist</a></li>
-			<!-- >li><a href="dependency-alerts/frontend.html">Dependency Alert Checklist (Frontend)</a></li-->
-			
-			<li>Security Hub findings: 
-			Before the meeting run <a href="https://github.com/Sage-Bionetworks/security-hub-to-jira">this script</a> to create/update Jira issues for findings. 
-			List of open issues is <a href="https://sagebionetworks.jira.com/issues/?jql=resolution%20%3D%20Unresolved%20AND%20labels%20%3D%20auto-generated%20ORDER%20BY%20key%20DESC%2C%20created%20DESC"> here.</a>
+			<!-- These are covered in a separate meeting with the full web engineering team <li><a href="dependency-alerts/frontend.html">Dependency Alert Checklist (Frontend)</a></li -->
+
+			<li>Security Hub findings:
+				Before the meeting run <a href="https://github.com/Sage-Bionetworks/security-hub-to-jira">this
+					script</a> to create/update Jira issues for findings.
+				List of open issues is <a
+					href="https://sagebionetworks.jira.com/issues/?jql=resolution%20%3D%20Unresolved%20AND%20labels%20%3D%20auto-generated%20ORDER%20BY%20key%20DESC%2C%20created%20DESC">
+					here.</a>
 			</li>
 		</ul>
 
 	</ul>
 </body>
+
 </html>

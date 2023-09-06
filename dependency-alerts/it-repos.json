@@ -1,5 +1,4 @@
 [
-  "Sage-Bionetworks-IT/cfn-macro-cost-rules",
   "Sage-Bionetworks-IT/cfn-cr-sc-bucket-policy",
   "Sage-Bionetworks-IT/lambda-ebs-cleanup",
   "Sage-Bionetworks-IT/lambda-template",

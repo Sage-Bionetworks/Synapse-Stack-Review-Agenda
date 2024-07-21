@@ -24,13 +24,13 @@
 	var staging_closed_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=status%20%3D%20Closed%20AND%20fixVersion%20%3D%20stack-#staging#%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
 	var next_jira = "https://sagebionetworks.jira.com/issues/?filter=-1&jql=fixVersion%20%3D%20stack-#next#%20ORDER%20BY%20cf%5B11140%5D%20ASC%2C%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC";
 
-	function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText) {
+	function compareDiffAndUpdateElement(elementId, repository, baseBranch, mergeBranch, successText, failureText, failureTextColor = "red") {
 		$.getJSON("https://api.github.com/repos/Sage-Bionetworks/" + repository + "/compare/" + baseBranch + "...Sage-Bionetworks:" + mergeBranch).done(function(data){
 			if (data.files.length==0) {
 				document.getElementById(elementId).style="color:green;";
 				document.getElementById(elementId).innerHTML=successText;
 			} else {
-				document.getElementById(elementId).style="color:red;";
+				document.getElementById(elementId).style=`color:${failureTextColor};`;
 				document.getElementById(elementId).innerHTML=failureText;
 			}
 		});
@@ -84,6 +84,7 @@
 						const synapseReactClientVersionInSwc = synapseWebPackageJson.dependencies['synapse-react-client']
 						$.getJSON("https://raw.githubusercontent.com/Sage-Bionetworks/synapse-web-monorepo/main/packages/synapse-react-client/package.json").done(function(synapseReactClientPackageJson){
 							const synapseReactClientLatestVersion = synapseReactClientPackageJson.version
+							const synapseReactClientLatestVersionTag = `synapse-react-client/v${synapseReactClientLatestVersion}`
 							if (synapseReactClientVersionInSwc === synapseReactClientLatestVersion) {
 								document.getElementById("src_version_in_swc").style="color:green;";
 								document.getElementById("src_version_in_swc").innerHTML="SWC develop is using the latest version of synapse-react-client.";
@@ -95,12 +96,13 @@
 							compareDiffAndUpdateElement(
 								"src_latest_tag_vs_main",
 								"synapse-web-monorepo",
+								synapseReactClientLatestVersionTag,
 								"main",
-								`synapse-react-client/v${synapseReactClientLatestVersion}`,
 								"Latest synapse-react-client contains all changes in main.",
-								"Latest synapse-react-client does not contain all changes in main."
+								"Latest synapse-react-client does not contain all changes in main (may include irrelevant changes, such as portals).",
+								"#ff9966"
 							)
-							document.getElementById('src_latest_tag_vs_main').href=`https://github.com/Sage-Bionetworks/synapse-web-monorepo/compare/${synapseReactClientLatestVersion}...Sage-Bionetworks:main`;
+							document.getElementById('src_latest_tag_vs_main').href=`https://github.com/Sage-Bionetworks/synapse-web-monorepo/compare/${synapseReactClientLatestVersionTag}...Sage-Bionetworks:main`;
 						})
 					});
 

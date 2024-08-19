@@ -5,7 +5,7 @@ function fetchRepos(pathToJson, callback) {
 function injectRows(data, tbodyId, urlSuffix) {
   const innerHTML = data
     .map(function (repo) {
-      urlTemplate = 'https://github.com/${repo}/security/'+urlSuffix;
+      urlTemplate = 'https://github.com/'+repo+'/security/'+urlSuffix;
       return `
             <tr>
                 <td style="text-align: left;">

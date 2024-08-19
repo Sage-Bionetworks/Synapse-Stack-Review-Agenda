@@ -23,7 +23,7 @@ function injectRows(data, tbodyId, urlSuffix) {
 function addOpenAllReposLink(data, linkId, urlSuffix) {
   function openAll() {
     data.forEach((repo) => {
-      const url = `https://github.com/${repo}/security/`+urlSuffix;
+      const url = `https://github.com/${repo}/security/${urlSuffix}`;
       window.open(url);
     });
   }

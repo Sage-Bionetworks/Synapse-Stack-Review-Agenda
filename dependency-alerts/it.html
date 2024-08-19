@@ -30,9 +30,8 @@
 		$("#jsonGithubLink").attr("href", jsonDataGithubLink);
 		fetchRepos(jsonDataUrl, function (data) {
 			injectRows(data, "#repos", 'dependabot')
-			addOpenAllReposLink(data, "openAllRepos", 'dependabot')
 		});
-		$("#jsonCodeScanGithubLink").attr("href", jsonGithubCodeScanLink);
+		$("#jsonGithubCodeScanLink").attr("href", jsonGithubCodeScanLink);
 		fetchRepos(jsonCodeScanDataUrl, function (data) {
 			injectRows(data, "#code-scan-repos", 'code-scanning')
 		});
@@ -41,12 +40,10 @@
 </head>
 <body>
 	<h1>Dependency Alerts (IT)</h1>
-	<hr />
 	<ol>
 		<li> Verify that the list of repositories is accurate. If inaccurate, update <a id="jsonGithubLink">the JSON file</a>.</li>
-		<li> Check for Dependabot alerts on each repository. Create Jira tickets as needed, and dismiss the alert in GitHub once it has been addressed.</li>
+		<li> Check for Dependabot alerts on each repository. Create Jira tickets as needed.</li>
 	</ol>
-	<p id="openAllRepos"></p>
 	<table >
 		<thead>
 		<tr>
@@ -56,8 +53,8 @@
 	</thead>
 	<tbody id="repos"></tbody>
 	</table>
-	<h1>Code scanning Checklist (IT)</h1>
 	<hr />
+	<h1>Code scanning Checklist (IT)</h1>
 	<ol>
 		<li> Verify that the list of repositories is accurate. If inaccurate, update <a id="jsonGithubCodeScanLink">the JSON file</a>.</li>
 		<li> Check for code scan alerts on each repository. Create Jira tickets as needed, and dismiss the alert in GitHub once it has been addressed.</li>

@@ -1,19 +1,12 @@
 [
   "Sage-Bionetworks/Synapse-Repository-Services",
   "Sage-Bionetworks/Synapse-Stack-Builder",
-  "Sage-Bionetworks/worker-utilities",
   "Sage-Bionetworks/Synapse-Migration-Utility",
   "Sage-Bionetworks/SynapseWorkflowOrchestrator",
-  "Sage-Bionetworks/aws-utilities",
-  "Sage-Bionetworks/database-semaphore",
   "Sage-Bionetworks/schema-to-pojo",
   "Sage-Bionetworks/Synapse-User-Geolocation",
-  "Sage-Bionetworks/SimpleHttpClient",
   "Sage-Bionetworks/JSON-java",
-  "Sage-Bionetworks/common-utilities",
   "Sage-Bionetworks/ChallengeDockerAgent",
-  "Sage-Bionetworks/csv-utilities",
   "Sage-Bionetworks/QuizTextToJSONConverter",
-  "Sage-Bionetworks/url-signer",
   "Sage-Bionetworks/Synapse-ETL-Jobs"
 ]

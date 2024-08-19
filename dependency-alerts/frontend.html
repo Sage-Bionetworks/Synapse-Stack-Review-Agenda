@@ -28,8 +28,8 @@
 	$(document).ready(function() {
 		$("#jsonGithubLink").attr("href", jsonDataGithubLink);
 		fetchRepos(jsonDataUrl, function (data) {
-			injectRows(data, "#repos")
-			addOpenAllReposLink(data, "openAllRepos")
+			injectRows(data, "#repos", 'dependabot')
+			addOpenAllReposLink(data, "openAllRepos", 'dependabot')
 		});
 	});
 </script>

@@ -24,17 +24,23 @@
 <script type="text/javascript">
 	const jsonDataGithubLink = "https://github.com/Sage-Bionetworks/Synapse-Stack-Review-Agenda/blob/gh-pages/dependency-alerts/it-repos.json"
 	const jsonDataUrl = "./it-repos.json";
+	const jsonGithubCodeScanLink = "https://github.com/Sage-Bionetworks/Synapse-Stack-Review-Agenda/blob/gh-pages/dependency-alerts/it-code-scan-repos.json"
+	const jsonCodeScanDataUrl = "./it-code-scan-repos.json";
 	$(document).ready(function() {
 		$("#jsonGithubLink").attr("href", jsonDataGithubLink);
 		fetchRepos(jsonDataUrl, function (data) {
-			injectRows(data, "#repos")
-			addOpenAllReposLink(data, "openAllRepos")
+			injectRows(data, "#repos", 'dependabot')
+			addOpenAllReposLink(data, "openAllRepos", 'dependabot')
+		});
+		$("#jsonCodeScanGithubLink").attr("href", jsonGithubCodeScanLink);
+		fetchRepos(jsonCodeScanDataUrl, function (data) {
+			injectRows(data, "#code-scan-repos", 'code-scanning')
 		});
 	});
 </script>
 </head>
 <body>
-	<h1>Dependency Alert Meeting Checklist (IT)</h1>
+	<h1>Dependency Alerts (IT)</h1>
 	<hr />
 	<ol>
 		<li> Verify that the list of repositories is accurate. If inaccurate, update <a id="jsonGithubLink">the JSON file</a>.</li>
@@ -49,6 +55,21 @@
 		</tr>
 	</thead>
 	<tbody id="repos"></tbody>
+	</table>
+	<h1>Code scanning Checklist (IT)</h1>
+	<hr />
+	<ol>
+		<li> Verify that the list of repositories is accurate. If inaccurate, update <a id="jsonGithubCodeScanLink">the JSON file</a>.</li>
+		<li> Check for code scan alerts on each repository. Create Jira tickets as needed, and dismiss the alert in GitHub once it has been addressed.</li>
+	</ol>
+	<table >
+		<thead>
+		<tr>
+			<th style="text-align: left;">Repository</th>
+			<th style="text-align: center;">Code Scan Alerts Checked?</th>
+		</tr>
+	</thead>
+	<tbody id="code-scan-repos"></tbody>
 	</table>
 </body>
 </html>

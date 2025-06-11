@@ -156,10 +156,10 @@
 	Prod version <span id="prod"></span><br />
 	Staging version <span id="staging"></span>
 	<ul>
-		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20WW%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20fixVersion%20in%20(EMPTY%2C%20#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">this list of issues</a> to assigned validators.</li>
+		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PORTALS%2C%20PLFM%2C%20WW%2C%20SWC%2C%20SAGL)%20AND%20status%20%3D%20Resolved%20AND%20fixVersion%20in%20(EMPTY%2C%20#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">this list of issues</a> to assigned validators.</li>
 
 		<li> Check that the staging stack is running and that data has migrated to the staging stack.</li>
-		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate%2C%20%22Cannot%20Reproduce%22)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
+		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC%2C%20SAGL)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate%2C%20%22Cannot%20Reproduce%22)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
 		<li> Make the Go-Live Decision for the new stack.</li>
 		<li> Release the previous stack in Jira.</li>
 		<li> Archive release notes, as required by Quality program, <a href="https://www.synapse.org/#!Synapse:syn25946179">here</a>.</li>

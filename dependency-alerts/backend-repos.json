@@ -9,5 +9,8 @@
   "Sage-Bionetworks/ChallengeDockerAgent",
   "Sage-Bionetworks/QuizTextToJSONConverter",
   "Sage-Bionetworks/Synapse-ETL-Jobs",
-  "Sage-Bionetworks/synapse-docker-registry"
+  "Sage-Bionetworks/synapse-docker-registry",
+  "Sage-Bionetworks/synapse-ops-core",
+  "Sage-Bionetworks/synapse-ops-dev",
+  "Sage-Bionetworks/synapse-ops-prod"  
 ]

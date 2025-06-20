@@ -162,6 +162,7 @@
 		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC%2C%20SAGL)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate%2C%20%22Cannot%20Reproduce%22)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>
 		<li> Make the Go-Live Decision for the new stack.</li>
 		<li> Release the previous stack in Jira.</li>
+		<li> Announce the release on Slack.</li>
 		<li> Archive release notes, as required by Quality program, <a href="https://www.synapse.org/#!Synapse:syn25946179">here</a>.</li>
 		<li> Identify <a id="staging_closed_jira" href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Fixed%2C%20Done)%20AND%20fixVersion%20%3D%20stack-#staging#">significant features</a> that may merit an announcement to users.</li>
 		<li> Check that there are no unresolved issues on the <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC)%20AND%20status%20in%20(%22In%20Progress%22%2C%20Open%2C%20%22Blocked/Monitoring%22%2C%20%22Waiting for Review%22)%20AND%20fixVersion%20in%20(#staging_and_older#)%20ORDER%20BY%20labels%20ASC%2C%20priority%20DESC%2C%20status%20DESC%2C%20reporter%20ASC%2C%20updatedDate%20DESC">staging stack</a>.</li>

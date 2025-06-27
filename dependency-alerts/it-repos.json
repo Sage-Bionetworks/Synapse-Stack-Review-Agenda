@@ -32,5 +32,6 @@
   "Sage-Bionetworks-IT/rstudio-service-catalog",
   "Sage-Bionetworks-IT/lambda-ec2-terminator",
   "Sage-Bionetworks-IT/lambda-finops-s3-cost-report",
-  "Sage-Bionetworks-IT/lambda-tag-patch-group"
+  "Sage-Bionetworks-IT/lambda-tag-patch-group",
+  "Sage-Bionetworks-IT/lambda-finops-floqast-sftp"
 ]

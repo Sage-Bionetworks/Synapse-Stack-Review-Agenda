@@ -19,7 +19,6 @@
   "Sage-Bionetworks/aws-infra",
   "Sage-Bionetworks/scicomp-provisioner",
   "Sage-Bionetworks/service-catalog-library",
-  "Sage-Bionetworks/aws-application-deployment-template",
   "Sage-Bionetworks/security-hub-to-jira",
   "Sage-Bionetworks/synapse-login-aws-infra",
   "Sage-Bionetworks/synapse-login-scipool",

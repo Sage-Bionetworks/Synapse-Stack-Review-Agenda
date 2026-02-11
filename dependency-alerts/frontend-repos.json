@@ -2,9 +2,8 @@
   "Sage-Bionetworks/synapse-web-monorepo",
   "Sage-Bionetworks/SynapseWebClient",
   "Sage-Bionetworks/GwtVisualizationWrappers",
-  "Sage-Bionetworks/react-base-table",
+  "Sage-Bionetworks/Sage_Website",
   "Sage-Bionetworks/nbconvert-webapp",
   "Sage-Bionetworks/gwtbootstrap3",
-  "Sage-Bionetworks/gwtbootstrap3-extras",
-  "Sage-Bionetworks/Agora"
+  "Sage-Bionetworks/gwtbootstrap3-extras"
 ]

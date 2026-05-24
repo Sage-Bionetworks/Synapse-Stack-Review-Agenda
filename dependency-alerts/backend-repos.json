@@ -12,5 +12,9 @@
   "Sage-Bionetworks/synapse-docker-registry",
   "Sage-Bionetworks/synapse-ops-core",
   "Sage-Bionetworks/synapse-ops-dev",
-  "Sage-Bionetworks/synapse-ops-prod"  
+  "Sage-Bionetworks/synapse-ops-prod",
+  "Sage-Bionetworks/synapse-rest-openapi",
+  "Sage-Bionetworks/markdown-it-synapse-server",
+  "Sage-Bionetworks/synapse-markdown-it-lambda",
+  "Sage-Bionetworks/synapse-cloudwatch-dashboard"
 ]

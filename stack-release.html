@@ -156,7 +156,7 @@
 	Prod version <span id="prod"></span><br />
 	Staging version <span id="staging"></span>
 	<ul>
-		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues?jql=project%20in%20%28PORTALS%2C%20PLFM%2C%20WW%2C%20SWC%2C%20SAGL%29%0Aand%20status%20%3D%20Resolved%0Aand%20%28fixVersion%20in%20%28#staging_and_older#%29%0Aor%20%28fixVersion%20in%20%28empty%29%20and%20updated%20%3E%3D%20-4w%29%29%0AORDER%20BY%20Validator%20ASC">this list of issues</a> to assigned validators.</li>
+		<li>Before meeting, send <a href="https://sagebionetworks.jira.com/issues?jql=project%20in%20%28PORTALS%2C%20PLFM%2C%20SWC%2C%20SAGL%29%0Aand%20status%20%3D%20Resolved%0Aand%20%28fixVersion%20in%20%28#staging_and_older#%29%0Aor%20%28fixVersion%20in%20%28empty%29%20and%20updated%20%3E%3D%20-4w%29%29%0AORDER%20BY%20Validator%20ASC">this list of issues</a> to assigned validators.</li>
 
 		<li> Check that the staging stack is running and that data has migrated to the staging stack.</li>
 		<li> Check that resolved issues on <a href="https://sagebionetworks.jira.com/issues/?filter=-1&jql=project%20in%20(PLFM%2C%20SWC%2C%20SAGL)%20AND%20status%20%3D%20Resolved%20AND%20resolution%20not%20in%20(%22Won%27t%20Do%22%2C%20%22Won%27t%20Fix%22%2C%20Duplicate%2C%20%22Cannot%20Reproduce%22%2C%20%22Incomplete%22)%20AND%20fixVersion%20in%20(EMPTY%2C%20stack-#staging#)%20and%20(Labels%20is%20empty%20or%20Labels%20not%20in%20(Design%2C%20DesignQuitHit))%20ORDER%20BY%20Validator%20ASC">staging stack</a> are validated (closed).</li>

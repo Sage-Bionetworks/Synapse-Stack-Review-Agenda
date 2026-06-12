@@ -32,5 +32,18 @@
   "Sage-Bionetworks-IT/lambda-ec2-terminator",
   "Sage-Bionetworks-IT/lambda-finops-s3-cost-report",
   "Sage-Bionetworks-IT/lambda-tag-patch-group",
-  "Sage-Bionetworks-IT/lambda-finops-floqast-sftp"
+  "Sage-Bionetworks-IT/lambda-finops-floqast-sftp",
+  "Sage-Bionetworks/BridgeServer2",
+  "Sage-Bionetworks/BridgeServer2-infra",
+  "Sage-Bionetworks/Bridge-Exporter",
+  "Sage-Bionetworks/Bridge-Exporter-infra",
+  "Sage-Bionetworks/BridgeWorkerPlatform",
+  "Sage-Bionetworks/BridgeWorkerPlatform-infra",
+  "Sage-Bionetworks/BridgeDocs",
+  "Sage-Bionetworks/bridge-base",
+  "Sage-Bionetworks/BridgeClientKMM",
+  "Sage-Bionetworks/BridgeJavaSDK",
+  "Sage-Bionetworks/BridgeTestUtils",
+  "Sage-Bionetworks/BridgeDJengScripts",
+  "Sage-Bionetworks/BridgeResearcherUI"
 ]

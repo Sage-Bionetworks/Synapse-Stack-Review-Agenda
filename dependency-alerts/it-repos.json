@@ -16,7 +16,6 @@
   "Sage-Bionetworks-IT/service-catalog-ssm-access",
   "Sage-Bionetworks-IT/cfn-cr-sc-product-provider",
   "Sage-Bionetworks-IT/cfn-explode-macro",
-  "Sage-Bionetworks/aws-infra",
   "Sage-Bionetworks/scicomp-provisioner",
   "Sage-Bionetworks/service-catalog-library",
   "Sage-Bionetworks/security-hub-to-jira",

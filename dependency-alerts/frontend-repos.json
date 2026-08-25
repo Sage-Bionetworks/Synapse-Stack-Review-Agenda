@@ -5,5 +5,6 @@
   "Sage-Bionetworks/Sage_Website",
   "Sage-Bionetworks/nbconvert-webapp",
   "Sage-Bionetworks/gwtbootstrap3",
-  "Sage-Bionetworks/gwtbootstrap3-extras"
+  "Sage-Bionetworks/gwtbootstrap3-extras",
+  "Sage-Bionetworks/react-datasheet-grid"
 ]

@@ -6,7 +6,6 @@
   "Sage-Bionetworks/schema-to-pojo",
   "Sage-Bionetworks/Synapse-User-Geolocation",
   "Sage-Bionetworks/JSON-java",
-  "Sage-Bionetworks/ChallengeDockerAgent",
   "Sage-Bionetworks/QuizTextToJSONConverter",
   "Sage-Bionetworks/Synapse-ETL-Jobs",
   "Sage-Bionetworks/synapse-docker-registry",

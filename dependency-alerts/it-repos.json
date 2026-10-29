@@ -29,6 +29,8 @@
   "Sage-Bionetworks-IT/lambda-finops-s3-cost-report",
   "Sage-Bionetworks-IT/lambda-tag-patch-group",
   "Sage-Bionetworks-IT/lambda-finops-floqast-sftp",
+  "Sage-Bionetworks-IT/agora-infra-v3",
+  "Sage-Bionetworks-IT/qtlexplorer-infra",
   "Sage-Bionetworks/BridgeServer2",
   "Sage-Bionetworks/BridgeServer2-infra",
   "Sage-Bionetworks/Bridge-Exporter",
